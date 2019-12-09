@@ -17,7 +17,7 @@ char* Read_buff (FILE* f_mem)
     int size_of_file = ftell (fin);
     rewind (fin);
 
-    char* buff = (char*) my_calloc (f_mem, size_of_file, sizeof (char), __LINE__);
+    char* buff = (char*) my_calloc (f_mem, size_of_file, sizeof (char), INFO);
 
     fread (buff, sizeof (char), size_of_file, fin);
 
@@ -71,14 +71,14 @@ int main ()
     Stack_t stk;
     StackConstructor (&stk, "stk");
 
-    int* mem = (int*) my_calloc (f_mem, Max_mem_size, sizeof (int), __LINE__);
-    int* reg = (int*) my_calloc (f_mem, Max_reg_kol, sizeof (int), __LINE__);
+    int* mem = (int*) my_calloc (f_mem, Max_mem_size, sizeof (int), INFO);
+    int* reg = (int*) my_calloc (f_mem, Max_reg_kol, sizeof (int), INFO);
 
     run_asm_code (f_mem, buff, stk, mem, reg);
 
-    my_free (f_mem, buff, __LINE__);
-    my_free (f_mem, mem, __LINE__);
-    my_free (f_mem, reg, __LINE__);
+    my_free (f_mem, buff, INFO);
+    my_free (f_mem, mem, INFO);
+    my_free (f_mem, reg, INFO);
 
     return 0;
 }

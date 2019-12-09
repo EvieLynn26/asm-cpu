@@ -33,6 +33,8 @@ struct Arg
 #include "my_calloc_free.h"
 
 
+#define INFO __LINE__, __PRETTY_FUNCTION__, __FILE__
+
 #define DEBUG
 
 #ifdef DEBUG

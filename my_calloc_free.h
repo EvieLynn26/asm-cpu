@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 void* my_calloc (FILE* f, size_t kol, size_t size_of_elem, int line, const char* func, const char* file)
@@ -23,7 +24,6 @@ void* my_calloc (FILE* f, size_t kol, size_t size_of_elem, int line, const char*
 
 void my_free (FILE* f, void* mem, int line, const char* func, const char* file)
 {
-    //fprintf (f, "-----------------------------------------------------------------------\n");
     fprintf (f,     "%p -- call to free this block from %3d line %s func %s\n", mem, line, strrchr (file, '\\'), func);
 
     free (mem);

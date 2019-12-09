@@ -184,9 +184,8 @@ void skip_probs (char** buff)
 
     if (**buff == '/')
     {
-       printf ("COMMENT!!");
         while (**buff != '\n')
-            *buff++;
+            *buff += 1;
     }
 
     return;
