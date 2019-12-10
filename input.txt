@@ -1,0 +1,32 @@
+IN
+POP ax //in ax now n for fact
+
+PUSH 1
+
+JMP fac
+
+:fac
+POP bx
+
+PUSH bx
+OUT
+
+PUSH bx
+PUSH ax
+JE out
+
+PUSH bx
+PUSH 1
+ADD
+PUSH bx
+MUL
+POP bx
+PUSH bx
+PUSH ax
+JMP fac
+
+:out
+OUT
+END
+
+

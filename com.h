@@ -21,7 +21,7 @@ DEF_CMD(PUSH, 4, 1,
         }
         skip_probs (&buff);
 
-        ON_DEBUG(Dump (&stk);)
+       // ON_DEBUG(Dump (&stk);)
     })
 
 DEF_CMD(POP, 3, 2,
@@ -45,14 +45,14 @@ DEF_CMD(POP, 3, 2,
             Elem_t t = StackPop (&stk);
         }
 
-        ON_DEBUG(Dump (&stk);)
+       // ON_DEBUG(Dump (&stk);)
     })
 
 DEF_CMD(ADD, 3, 3,
     {
         StackPush (&stk, StackPop (&stk) + StackPop (&stk));
 
-        ON_DEBUG(Dump (&stk);)
+        //ON_DEBUG(Dump (&stk);)
     })
 
 DEF_CMD(SUB, 3, 4,
@@ -60,7 +60,7 @@ DEF_CMD(SUB, 3, 4,
         Elem_t t = StackPop (&stk);
         StackPush (&stk, StackPop (&stk) - t);
 
-        ON_DEBUG(Dump (&stk);)
+       // ON_DEBUG(Dump (&stk);)
     })
 
 DEF_CMD(MUL, 3, 5,

@@ -187,6 +187,7 @@ void skip_probs (char** buff)
         while (**buff != '\n')
             *buff += 1;
     }
+    *buff++;
 
     return;
 }

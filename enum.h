@@ -35,7 +35,7 @@ struct Arg
 
 #define INFO __LINE__, __PRETTY_FUNCTION__, __FILE__
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
     #define ON_DEBUG(code) code
