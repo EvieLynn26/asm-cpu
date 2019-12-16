@@ -9,7 +9,6 @@
 #include <ctype.h>
 
 #include "enum.h"
-#include "D:\Downloads\TX\TXLib.h"
 
 
 const size_t Max_label_kol = 10;
@@ -45,11 +44,11 @@ int main ()
 
     char* binary_buff = buff_to_asm (f_mem, buff);
 
-    my_free (f_mem, buff, __LINE__, __PRETTY_FUNCTION__, __FILE__);
+    my_free (f_mem, buff, INFO);
 
     Write_in_file (binary_buff);
 
-    my_free (f_mem, binary_buff, __LINE__, __PRETTY_FUNCTION__, __FILE__);
+    my_free (f_mem, binary_buff, INFO);
 
     return 0;
 }
@@ -72,7 +71,7 @@ char* Read_buff (FILE* f_mem)
     size_of_file = ftell (fin);
     rewind (fin);
 
-    char* buff = (char*) my_calloc (f_mem, size_of_file, sizeof (char), __LINE__, __PRETTY_FUNCTION__, __FILE__);
+    char* buff = (char*) my_calloc (f_mem, size_of_file, sizeof (char), INFO);
 
     fread (buff, sizeof (char), size_of_file, fin);
 
@@ -197,6 +196,7 @@ void coming_through_buff (char* buff, char* curr, label* label_arr)
     char* bb_beg = curr;
 
     int step = 0;
+    int free = 0;//index of free place for new label
 
     while (*buff != '\0')
     {
@@ -226,6 +226,7 @@ void coming_through_buff (char* buff, char* curr, label* label_arr)
                     find_jump_by_label (label_name, label_arr, &adr);   \
                                                                         \
                     *(int*) curr = adr;                                 \
+                    printf ("Записали адрес %d метки %s в бин буф\n", adr, label_name);      \
                                                                         \
                     curr += sizeof (int);                               \
                 }                                                       \
@@ -235,10 +236,10 @@ void coming_through_buff (char* buff, char* curr, label* label_arr)
         {
             buff++;
 
-            sscanf (buff, "%s%n", label_arr->name, &step);
-            label_arr->adr = curr - bb_beg;
+            sscanf (buff, "%s%n", label_arr[free].name, &step);
+            label_arr[free].adr = curr - bb_beg;
 
-            label_arr++;
+            free++;
 
             buff += step;
         }
@@ -260,7 +261,9 @@ char* buff_to_asm (FILE* f_mem, char* buff)
     label* label_arr = (label*) my_calloc (f_mem, Max_label_kol, sizeof (label), __LINE__, __PRETTY_FUNCTION__, __FILE__);
 
     coming_through_buff (buff, binary_buff, label_arr);
-    ON_DEBUG(Dump_label_arr (label_arr));
+
+    Dump_label_arr (label_arr);
+
     coming_through_buff (buff, binary_buff, label_arr);
 
     my_free (f_mem, label_arr, __LINE__, __PRETTY_FUNCTION__, __FILE__);

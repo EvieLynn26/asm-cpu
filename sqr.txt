@@ -60,14 +60,24 @@ JMP infRoots
 
 :bEzero
 PUSH cx
+PUSH -1
+MUL
+PUSH ax
+DIV
+POP dx
+
+PUSH dx
 SQRT
-POP cx
-PUSH cx
+POP dx
+
+PUSH dx
 OUT
-PUSH cx
+
+PUSH dx
 PUSH -1
 MUL
 OUT
+
 END
 
 :noRoots

@@ -17,11 +17,12 @@ DEF_CMD(PUSH, 4, 1,
         }
         else
         {
-            StackPush (&stk, reg[arg_set.reg_num] + arg_set.number);
+            StackPush (&stk, reg[arg_set.reg_num] + arg_set.number * 100);
         }
         skip_probs (&buff);
 
-       // ON_DEBUG(Dump (&stk);)
+       printf("PUSH:\n");
+       Dump (&stk);
     })
 
 DEF_CMD(POP, 3, 2,
@@ -45,14 +46,16 @@ DEF_CMD(POP, 3, 2,
             Elem_t t = StackPop (&stk);
         }
 
-       // ON_DEBUG(Dump (&stk);)
+    printf ("POP:\n");
+       Dump (&stk);
     })
 
 DEF_CMD(ADD, 3, 3,
     {
         StackPush (&stk, StackPop (&stk) + StackPop (&stk));
 
-        //ON_DEBUG(Dump (&stk);)
+        printf ("ADD:\n");
+        Dump (&stk);
     })
 
 DEF_CMD(SUB, 3, 4,
@@ -60,37 +63,48 @@ DEF_CMD(SUB, 3, 4,
         Elem_t t = StackPop (&stk);
         StackPush (&stk, StackPop (&stk) - t);
 
-       // ON_DEBUG(Dump (&stk);)
+       Dump (&stk);
     })
 
 DEF_CMD(MUL, 3, 5,
     {
-        StackPush (&stk, StackPop (&stk) * StackPop (&stk));
+        StackPush (&stk, StackPop (&stk) * StackPop (&stk) / 100);
     })
 
 DEF_CMD(DIV, 3, 6,
     {
         Elem_t t = StackPop (&stk);
-        StackPush (&stk, StackPop (&stk) / t);
+        StackPush (&stk, StackPop (&stk) * 100 / t);
     })
 
 DEF_CMD(IN, 2, 7,
     {
-        Elem_t t = 0;
+        float t = 0;
 
-        scanf ("%d", &t);
+        scanf ("%f", &t);
 
-        StackPush (&stk, t);
+        StackPush (&stk, (int) (t * 100));
     })
 
 DEF_CMD(OUT, 3, 8,
     {
-        printf ("Rez: %d\n", StackPop (&stk));
+        int t = StackPop (&stk);
+        $i
+        printf ("Rez: mul100: %d, normal:%.2f\n", t, (float) t / 100);
+        $d
     })
 
 DEF_CMD(SQRT, 4, 9,
     {
-        StackPush (&stk, (int) sqrt (StackPop (&stk)));
+        Elem_t t = (Elem_t) (sqrt (StackPop (&stk)) * 10);
+        assert (t >= 0);
+        StackPush (&stk, t);
+    })
+
+DEF_CMD(SIN, 3, 20,
+    {
+        printf ("SIN: ");
+        StackPush (&stk, (Elem_t) (sin ((double) StackPop (&stk) / 100) * 100));
     })
 
 DEF_CMD(END, 3, 50,
@@ -190,15 +204,17 @@ DEF_CMD(JNE, 3, 96,
         }
     })
 
-DEF_CMD(CALL, 4, 112,
+DEF_CMD(CALL, 4, 97,
     {
         int adr = *(int*) buff;
 
         buff += sizeof (int);
 
         StackPush (&stk_call, (int) (buff - buff_beg));
+        printf ("Return to %d\n",(int) (buff - buff_beg));
 
         buff = buff_beg + adr;
+        printf ("Now jump to %d\n", adr);
 
     })
 
