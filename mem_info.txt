@@ -1,9 +1,0 @@
-010D2D40 -- alloc new given pointer on    75 line \asm3.cpp func char* Read_buff(FILE*)
-
-010D4088 -- alloc new given pointer on   258 line \asm3.cpp func char* buff_to_asm(FILE*, char*)
-
-010D4478 -- alloc new given pointer on   260 line \asm3.cpp func char* buff_to_asm(FILE*, char*)
-
-010D4478 -- call to free this block from 266 line \asm3.cpp func char* buff_to_asm(FILE*, char*)
-010D2D40 -- call to free this block from  48 line \asm3.cpp func int main()
-010D4088 -- call to free this block from  52 line \asm3.cpp func int main()
